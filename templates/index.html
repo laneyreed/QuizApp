@@ -1,39 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>HOME</title>
+{% extends "base.html" %} 
 
-    <style>
-        #home-nav{
-            display: flex;
-        }
 
-        #home-logo{
-        width: 10rem;
-        height: 70px;
-        box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-        }
-        .logo{
-            width: 5rem;
-        }
 
-        .menu {
-          width: 100%;
-          display:flex;
-          align-items: center
-        }
-    </style>
+{% block main_nav %}
+    {% set page_class = "home-logo-container" %}
+    {% include "logo-base.html" %} 
 
-</head>
-<body>
-    <div id="home-nav">
-        <div id="home-logo" >
-                <img class="logo" src="static/images/fe-code-logo.png">
-            </div>
-        {% include "main_menu.html" %}
-    </div>
-<h3>FrontEnd Coding</h3>
-<p> This is a learning and reference tool for Frontend Development. </p>
-</body>
-</html>
+    {% include "main_menu.html" %}
+
+{% endblock main_nav %} 
+
+
+{% block main_content_area %}
+<main class="home-main-area">
+  <h1>Welcome to the Front End Dashboard</h1>
+  <p>This is a learning and reference tool for Frontend Development.</p>
+</main>
+{% endblock main_content_area %}
+
+

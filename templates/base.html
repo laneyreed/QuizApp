@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>HOME</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+  </head>
+  <body>
+
+
+<header class="main-nav">
+    {% block main_nav %} 
+    {% endblock main_nav %}
+</header>
+
+
+
+    {% block main_content_area %} 
+
+
+    {% endblock main_content_area %}
+
+
+  </body>
+</html>

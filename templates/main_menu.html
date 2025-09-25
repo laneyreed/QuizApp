@@ -1,77 +1,17 @@
-{% block style %}
-<style>
-.menu {
-  overflow: hidden;
-  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-}
-
-.menu a {
-  float: left;
-  display: block;
-  color: #333;
-  text-align: center;
-  padding: 8px 16px;
-  text-decoration: none;
-  font-size: 17px;
-}
-
-.menu a:hover {
-  background-color: #ddd;
-  color: black;
-}
-
-.menu a.active {
-  background-color: grey;
-  color: white;
-}
-
-.menu .icon {
-  display: none;
-}
-
-@media screen and (max-width: 600px) {
-  .menu a:not(:first-child) {display: none;}
-  .menu a.icon {
-    float: right;
-    display: block;
-  }
-}
-
-@media screen and (max-width: 600px) {
-  .menu.responsive {position: relative;}
-  .menu.responsive .icon {
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
-  .menu.responsive a {
-    float: none;
-    display: block;
-    text-align: left;
-  }
-}
-</style>
-{% endblock %}
-
-{% block nav %}
-<nav class="menu" id="nav_menu">
-  <a href="{{ url_for('home')}}">HTML</a>
-  <a href="{{ url_for('css_home')}}">CSS</a>
-  <a href="#JavaScript">JavaScript</a>
-  <a href="#Python">Python</a>
-  <a href="javascript:void(0);" class="icon" onclick="changeMenu()">
-    <i class="fa-solid fa-bars"></i>
-  </a>
+<nav id="nav-menu" class="nav-menu">
+  <ul>
+    <li>
+      <a href="{{ url_for('html_home')}}">HTML</a>
+    </li>
+    <li>
+      <a href="{{ url_for('css_home')}}">CSS</a>
+    </li>
+    <li>
+      <a href="#JavaScript">JavaScript</a>
+    </li>
+    <li>
+      <a href="#Python">Python</a>
+    </li>
+  </ul>
 </nav>
-{% endblock %}
 
-<script>
-function changeMenu() {
-  var x = document.getElementById("nav_menu");
-  if (x.className === "menu") {
-    x.className += " responsive";
-  } else {
-    x.className = "menu";
-  }
-}
-</script>

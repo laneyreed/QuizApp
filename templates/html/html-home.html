@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block main_nav %}
+    <div class="main-nav">
+        {% block logo %} 
+            {% set page_class = "content-logo-container" %}
+            {% include "logo-base.html" %} 
+        {% endblock logo %} 
+
+        {% include "main_menu.html" %}
+    </div>
+{% endblock main_nav %} 
+
+{% block main_content_area %}
+<div class="dashboard-container">
+    {% block sidebar %}
+            {# Define language-specific variables for the sidebar #}
+            {% set lang_name = "HTML" %}
+            {% set lang_concept_1 = "Elements and Tags" %}
+            {% set lang_concept_2 = "Attributes" %}
+            {% set lang_concept_3 = "Document Structure" %}
+            {% set lang_concept_4 = "Forms and Input" %}
+            {% set lang_concept_5 = "Multimedia" %}
+            {% set lang_concept_6 = "Semantic HTML" %}
+            {#{% set concept6_link = url_for('html_semantic') %}#}
+            {% set lang_concept_7 = "Links and Navigation" %}
+            {% include "sidebar.html" %}
+    {% endblock sidebar %}
+    
+
+    <main class="main-dashboard-content">
+        {% block main_content %}
+            <div class="intro">
+                <h1>HTML</h1>
+                    <ul>
+                        <li>stands for HyperText Markup Language</li>
+                        <li>is the standard markup language for creating web pages</li>
+                        <li>describes the structure of a web page using elements and tags</li>
+                    </ul>
+
+                    <h2>Fundamentals</h2>
+                    <p>HTML fundamentals encompass the core concepts and techniques required to effectively structure web pages</p>
+
+                    <h2>Syntax</h2>
+                    <p>Understanding the structure of HTML documents, which consist of elements, attributes, and values.</p>
+                    <ul>
+                        <li><span>Elements: the building blocks of HTML, represented by tags</span></li>
+                        <li><span>Attributes: provide additional information about elements</span></li>
+                        <li><span>Values: the specific settings or data assigned to attributes</span></li>
+                    </ul>
+            </div>
+        
+            <section class="concept-example-container">
+                <div class="code-boxe-container">
+                    <div class="code-box">
+                        <div class="code-box-title">HTML</div>
+                        <div class="code">
+                            <code>
+                                    <tagname attribute="value">Content</tagname>
+                                </code>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+        {% endblock main_content %}
+    </main>
+</div>
+{% endblock main_content_area %}
