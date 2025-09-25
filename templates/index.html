@@ -1,21 +1,26 @@
-{% extends "base.html" %} 
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>HOME</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+  </head>
+  <body>
 
 
-
-{% block main_nav %}
+<header class="main-nav">
     {% set page_class = "home-logo-container" %}
     {% include "logo-base.html" %} 
 
     {% include "main_menu.html" %}
+</header>
 
-{% endblock main_nav %} 
 
 
-{% block main_content_area %}
 <main class="home-main-area">
   <h1>Welcome to the Front End Dashboard</h1>
   <p>This is a learning and reference tool for Frontend Development.</p>
 </main>
-{% endblock main_content_area %}
 
-
+  </body>
+</html>

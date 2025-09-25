@@ -1,18 +1,16 @@
 {% extends "base.html" %}
 
 {% block main_nav %}
-    <div class="main-nav">
-        {% block logo %} 
-            {% set page_class = "content-logo-container" %}
-            {% include "logo-base.html" %} 
-        {% endblock logo %} 
+    {% block logo %} 
+        {% set page_class = "content-logo-container" %}
+        {% include "logo-base.html" %} 
+    {% endblock logo %} 
 
-        {% include "main_menu.html" %}
-    </div>
+    {% include "main_menu.html" %}
 {% endblock main_nav %} 
 
 {% block main_content_area %}
-<div class="dashboard-container">
+
     {% block sidebar %}
             {# Define language-specific variables for the sidebar #}
             {% set lang_name = "HTML" %}
@@ -27,9 +25,7 @@
             {% include "sidebar.html" %}
     {% endblock sidebar %}
     
-
-    <main class="main-dashboard-content">
-        {% block main_content %}
+    {% block main_content %}
             <div class="intro">
                 <h1>HTML</h1>
                     <ul>
@@ -65,6 +61,4 @@
             </section>
 
         {% endblock main_content %}
-    </main>
-</div>
 {% endblock main_content_area %}

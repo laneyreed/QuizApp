@@ -14,11 +14,15 @@
 </header>
 
 
+<div class="dashboard-container">
+     {% block sidebar %}
+     {% endblock sidebar %} 
 
-    {% block main_content_area %} 
-
-
-    {% endblock main_content_area %}
+    <main class="main-dashboard-content">
+        {% block main_content %}
+        {% endblock main_content %}
+    </main>
+</div>
 
 
   </body>

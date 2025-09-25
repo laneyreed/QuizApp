@@ -27,5 +27,16 @@ def css_concept(concept):
     return render_template("./css/css-concept.html", concept=concept)
 
 
+#****************************JavaScript Routes*****************************************
+@app.route("/javascript")
+def javascript_home():
+    return render_template("js/javascript.html")
+
+
+#****************************Python Routes*****************************************
+@app.route("/python")
+def python_home():
+    return render_template("python/python.html")
+
 if __name__ == "__main__":
     app.run(debug=True)
