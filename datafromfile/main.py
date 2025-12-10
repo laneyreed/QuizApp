@@ -1,20 +1,9 @@
-questions = [
-    {
-        "question": "What is the capital of France?",
-        "choices": {"A": "London", "B": "Berlin", "C": "Paris", "D": "Madrid"},
-        "answer": {"C": "Paris"}
-    },
-    {
-        "question": "Who painted the Mona Lisa?",
-        "choices":{"A": "Vincent van Gogh", "B": "Leonardo da Vinci", "C": "Pablo Picasso", "D": "Claude Monet"},
-        "answer": {"B": "Leonardo da Vinci"}
-    },
-    {
-        "question": "What is the largest planet in our solar system?",
-        "choices": {"A": "Earth", "B": "Mars", "C": "Jupiter", "D": "Saturn"},
-        "answer": {"C": "Jupiter"}
-    }
-]
+from json import load
+import random as ran
+# Load questions from JSON file
+with open('datafromfile/questions.json', 'r') as file:
+    questions = load(file)
+
 
 user_answers = []
 correct_answers = []
@@ -33,20 +22,22 @@ def get_correct_answer(question_data, question_index):
     return {question_index : correct_answer}
 
 def show_choices(choices):
-    # items will give both key and value,
-    # if we just say question_data["choices"], it will give only keys
     print("Choices:")
     for key, value in choices.items(): 
         print(f"  {key}: {value}")
 
 def start_quiz():
+    count = 0
     print("Welcome to the Quiz!\n")
-    for question_data in questions:
+    for _ in range(len(questions)):
+        count += 1
+        question_data = ran.choice(questions)
         question_index = questions.index(question_data)
-        print(f"Question {question_index + 1}:")
         question = question_data["question"]
+
+        print(f"Question {count}:")
         print(question)
-        
+            
         show_choices(question_data["choices"])
 
         user_answer = get_user_answer(question_index)
