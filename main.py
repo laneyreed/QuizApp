@@ -16,6 +16,11 @@ questions = [
     }
 ]
 
+
+
+user_answers = []
+correct_answers = []
+
 def get_user_answer():
     user_answer = input("Your answer (A, B, C, D): ").strip().upper()
     if user_answer not in ['A', 'B', 'C', 'D']:
@@ -23,48 +28,41 @@ def get_user_answer():
         return get_user_answer()
     return user_answer
 
-user_answers = []
-correct_answers = []
-for question_data in questions:
-    print(question_data["question"])
-    # print index
-    print(questions.index(question_data))
-    print("Choices:")
+def get_correct_answer(question_data):
+    for key in question_data:
+        correct_answer = key
+    return correct_answer
+    print(f"Correct answer: {correct_answer}\n")
+
+def show_choices(choices):
     # items will give both key and value,
     # if we just say question_data["choices"], it will give only keys
-    for key, value in question_data["choices"].items(): 
+    print("Choices:")
+    for key, value in choices.items(): 
         print(f"  {key}: {value}")
-    user_answer = get_user_answer()
-    print(f"Your answer: {user_answer}")
-    for key in question_data["answer"]:
-        correct_answer = key
-        correct_answers.append(correct_answer)
-    print(f"Correct answer: {correct_answer}\n")
-    user_answers.append(user_answer)
 
+
+
+def start_quiz():
+    print("Welcome to the Quiz!\n")
+    for question_data in questions:
+        question = question_data["question"]
+        print(question)
+        # print index
+        # print(questions.index(question_data))
+        
+        show_choices(question_data["choices"])
+
+        user_answer = get_user_answer()
+        user_answers.append(user_answer)
+        
+        correct_answer = get_correct_answer(question_data["answer"])
+        correct_answers.append(correct_answer)
+
+        print(f"Correct answer: {correct_answer}\n")
+        print(f"Your answer: {user_answer}")
+
+start_quiz()
 print("Quiz Completed!")
 print("Your Answers:", user_answers)
 print("Correct Answers:", correct_answers)
-    
-
-
-
-
-
-
-
-
-
-
-
-
-    # for key, value in question_data["choices"].items():
-    #     print(f"  {key}: {value}")
-    # user_answer = input("Your answer (A, B, C, D): ").strip().upper()
-    
-    # if user_answer in question_data["answer"]:
-    #     print("Correct!\n")
-    # else:
-    #     correct_key = list(question_data["answer"].keys())[0]
-    #     correct_value = question_data["answer"][correct_key]
-    #     print(f"Wrong! The correct answer is {correct_key}: {correct_value}\n")
