@@ -17,22 +17,21 @@ questions = [
 ]
 
 
-
 user_answers = []
 correct_answers = []
 
-def get_user_answer():
-    user_answer = input("Your answer (A, B, C, D): ").strip().upper()
+
+def get_user_answer(question_index):
+    user_answer = input("Enter Your answer (A, B, C, D): ").strip().upper()
     if user_answer not in ['A', 'B', 'C', 'D']:
         print("Invalid input. Please enter A, B, C, or D.")
-        return get_user_answer()
-    return user_answer
+        return get_user_answer(question_index)
+    return {question_index: user_answer}
 
-def get_correct_answer(question_data):
+def get_correct_answer(question_data, question_index):
     for key in question_data:
         correct_answer = key
-    return correct_answer
-    print(f"Correct answer: {correct_answer}\n")
+    return {question_index : correct_answer}
 
 def show_choices(choices):
     # items will give both key and value,
@@ -41,28 +40,33 @@ def show_choices(choices):
     for key, value in choices.items(): 
         print(f"  {key}: {value}")
 
-
-
 def start_quiz():
     print("Welcome to the Quiz!\n")
     for question_data in questions:
+        question_index = questions.index(question_data)
+        print(f"Question {question_index}:")
         question = question_data["question"]
         print(question)
-        # print index
-        # print(questions.index(question_data))
         
         show_choices(question_data["choices"])
 
-        user_answer = get_user_answer()
+        user_answer = get_user_answer(question_index)
         user_answers.append(user_answer)
         
-        correct_answer = get_correct_answer(question_data["answer"])
+        correct_answer = get_correct_answer(question_data["answer"], question_index)
         correct_answers.append(correct_answer)
 
-        print(f"Correct answer: {correct_answer}\n")
-        print(f"Your answer: {user_answer}")
+def check_answers():
+    score = 0
+    for i in range(len(user_answers)):
+        if user_answers[i] == correct_answers[i]:
+            score += 1
+    print(f"Your total score is: {score}/{len(questions)}")
 
-start_quiz()
-print("Quiz Completed!")
-print("Your Answers:", user_answers)
-print("Correct Answers:", correct_answers)
+def main():
+    start_quiz()
+    check_answers()
+    print("Quiz Completed!")
+
+if __name__ == "__main__":
+    main()

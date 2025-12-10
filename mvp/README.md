@@ -1,5 +1,4 @@
 
-## MVP
 ### User Stories
 - As a user, I want to answer multiple-choice questions one by one
 - As a user, I want to see my score and correct answers immediately after finishing
