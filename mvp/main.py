@@ -13,6 +13,16 @@ questions = [
         "question": "What is the largest planet in our solar system?",
         "choices": {"A": "Earth", "B": "Mars", "C": "Jupiter", "D": "Saturn"},
         "answer": {"C": "Jupiter"}
+    },
+    {
+        "question": "What is the chemical symbol for water?",
+        "choices": {"A": "O2", "B": "CO2", "C": "H2O", "D": "N2"},
+        "answer": {"C": "H2O"}
+    },
+    {
+        "question": "What is the smallest country in the world by land area?",
+        "choices": {"A": "Maldives", "B": "Vatican City", "C": "Monaco", "D": "Liechtenstein"},
+        "answer": {"B": "Vatican City"}
     }
 ]
 
@@ -40,6 +50,7 @@ def show_choices(choices):
         print(f"  {key}: {value}")
 
 def start_quiz():
+    score = 0
     print("Welcome to the Quiz!\n")
     for question_data in questions:
         question_index = questions.index(question_data)
@@ -55,16 +66,16 @@ def start_quiz():
         correct_answer = get_correct_answer(question_data["answer"], question_index)
         correct_answers.append(correct_answer)
 
-def check_answers():
-    score = 0
-    for i in range(len(user_answers)):
-        if user_answers[i] == correct_answers[i]:
+        if user_answer[question_index] == correct_answer[question_index]:
             score += 1
+            print("Correct!\n")
+        else:
+            print(f"Incorrect. The correct answer is {correct_answer[question_index]}.\n")
     print(f"Your total score is: {score}/{len(questions)}")
+
 
 def main():
     start_quiz()
-    check_answers()
     print("Quiz Completed!")
 
 if __name__ == "__main__":

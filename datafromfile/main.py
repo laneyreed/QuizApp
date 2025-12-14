@@ -3,7 +3,7 @@ import random as ran
 
 
 # Load questions from JSON file
-with open('datafromfile/questions.json', 'r') as file:
+with open('questions.json', 'r') as file:
     questions = load(file)
 
 
@@ -30,16 +30,17 @@ def show_choices(choices):
 
 def start_quiz():
     count = 0
+    score = 0
     print("Welcome to the Quiz!\n")
-    for _ in range(len(questions)):
+    ran.shuffle(questions)
+    for question_data in questions:
         count += 1
-        question_data = ran.choice(questions)
         question_index = questions.index(question_data)
         question = question_data["question"]
 
-        print(f"Question {count}:")
+
+        print(f"Question {count}.")
         print(question)
-            
         show_choices(question_data["choices"])
 
         user_answer = get_user_answer(question_index)
@@ -48,16 +49,44 @@ def start_quiz():
         correct_answer = get_correct_answer(question_data["answer"], question_index)
         correct_answers.append(correct_answer)
 
-def check_answers():
-    score = 0
-    for i in range(len(user_answers)):
-        if user_answers[i] == correct_answers[i]:
+
+        if user_answer[question_index] == correct_answer[question_index]:
             score += 1
+            print("Correct!\n")
+        else:
+            print(f"Incorrect. The correct answer is {correct_answer[question_index]}.\n")
+            
     print(f"Your total score is: {score}/{len(questions)}")
+
+
+
+
+
+    # for _ in range(len(questions)):
+    #     count += 1
+    #     question_data = ran.choice(questions)
+    #     question_index = questions.index(question_data)
+    #     question = question_data["question"]
+
+    #     print(f"Question {count}.")
+    #     print(question)
+            
+    #     show_choices(question_data["choices"])
+
+    #     user_answer = get_user_answer(question_index)
+    #     user_answers.append(user_answer)
+        
+    #     correct_answer = get_correct_answer(question_data["answer"], question_index)
+    #     correct_answers.append(correct_answer)
+    #     if user_answer[question_index] == correct_answer[question_index]:
+    #         score += 1
+    #         print("Correct!\n")
+    #     else:
+    #         print(f"Incorrect. The correct answer is {correct_answer[question_index]}.\n")
+    # print(f"Your total score is: {score}/{len(questions)}")
 
 def main():
     start_quiz()
-    check_answers()
     print("Quiz Completed!")
 
 if __name__ == "__main__":

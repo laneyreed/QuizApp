@@ -1,7 +1,9 @@
 
 ### User Stories
 - As a user, I want to answer multiple-choice questions one by one
-- As a user, I want to see my score and correct answers immediately after finishing
+- As a user, if I got the question correct I want to know immediately after responding
+- As a user, if I got the question wrong I want to see the correct answer immediately after responding
+- As a user, I want to see my score after finishing the quiz
 
 ### Questions Data Model
 - `questions`: a list of question dictionaries
