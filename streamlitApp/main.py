@@ -2,20 +2,6 @@ import streamlit as st
 import random as ran
 import json
 
-"""
-This is a simple quiz app built using Streamlit. 
-The app reads questions and answers from a JSON file, 
-shuffles them, and presents the user with a series of 
-multiple-choice questions. The user can submit their 
-answers, and the app will display their score and 
-provide feedback on each question. The user can also 
-try the quiz again by clicking the "Try Again" button.
-"""
-# future work:
-# add options to choose quiz type (e.g., multiple choice, true/false)
-# add options to choose quiz difficulty (e.g., easy, medium, hard)
-# add options to choose quiz category (e.g., history, science, technology)
-#=========================================================
 # Initialize session state variables
 if "shuffled_questions" not in st.session_state:
     st.session_state.shuffled_questions = {}
@@ -77,7 +63,6 @@ def format_choice_list(question_data):
 
 # Display the question and choices using st.radio
 def display_questions(question, choices_list, count):
-
     answer = st.radio(f"Question {count}.  {question}", choices_list, index=None, key=f"question_{count}")
     return answer
 
@@ -108,7 +93,7 @@ def format_questions(questions):
         st.session_state.user_answers = user_answers
         st.session_state.correct_answers = correct_answers
 
-        st.write(answer)
+        # st.write(answer)
 
 def score_quiz():
     score = 0
@@ -151,7 +136,7 @@ if st.session_state.start_quiz:
 # Display the start/try again button
 st.button(st.session_state.button_label, on_click=shuffle_and_start_quiz)
 
-st.write("Button state:", st.session_state.start_quiz)
+# st.write("Button state:", st.session_state.start_quiz)
 
 
 
