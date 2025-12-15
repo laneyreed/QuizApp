@@ -2,7 +2,8 @@ import streamlit as st
 import random as ran
 import json
 
-
+#=========================================================
+# Initialize session state variables
 if "questions" not in st.session_state:
     st.session_state.questions = {}
 
@@ -11,7 +12,11 @@ if "shuffled_questions" not in st.session_state:
 
 if 'start_quiz' not in st.session_state:
     st.session_state.start_quiz = False
+#=========================================================
 
+
+
+# Read JSON file and return data
 def read_json_file(file_path):
     try:
         with open(file_path, 'r') as file:
@@ -21,6 +26,8 @@ def read_json_file(file_path):
         st.error(f"{file_path} not found. Please ensure the file exists and is in the correct location.")
         return None
 
+
+# Get data from JSON file and store in session state
 def shuffle_and_start_quiz():
     # Toggle the checkbox state to the opposite value
     st.session_state.start_quiz = not st.session_state.start_quiz
@@ -29,12 +36,23 @@ def shuffle_and_start_quiz():
     st.session_state.questions = questions
     return st.session_state.questions
 
-
+# Format the correct answer for comparison
 def format_correct_answer(question_data):
     for key, value in question_data["answer"].items():
         answer = f"{key}. {value}"
     return answer
 
+# Format the choice list for display
+def format_choice_list(question_data):
+    choices_list = [f"{key}. {value}" for key, value in question_data["choices"].items()]
+    # ran.shuffle(choices_list)
+    return choices_list
+
+def display_questions(question, choices_list, count):
+    answer = st.radio(f"Question {count}.  {question}", choices_list, index=None, key=f"question_{count}")
+    return answer
+
+# Function to format and display questions
 def format_questions(questions):
     count = 0
     user_answers = []
@@ -44,16 +62,18 @@ def format_questions(questions):
         # Get the question text from the question_data dictionary
         question = question_data["question"]
 
-        choices_list = [f"{key}. {value}" for key, value in question_data["choices"].items()]
-        
-        # Format the correct answer
+        # Create a list of choices with random order
+        choices_list = format_choice_list(question_data)
+     
+        # Format the correct answer and append to the correct_answers list for comparison
         answer = format_correct_answer(question_data)
         correct_answers.append(answer)
 
-        
-
-        answer = st.radio(f"Question {count}.  {question}", choices_list, index=None, key=f"question_{count}")
+        # Display the question and choices and store the user's answer
+        answer = display_questions(question, choices_list, count)
         user_answers.append(answer)
+
+        # Store the user's answers and correct answers in session state
         st.session_state.user_answers = user_answers
         st.session_state.correct_answers = correct_answers
 
