@@ -2,9 +2,15 @@ import streamlit as st
 import random as ran
 import json
 
-st.title("Quiz App")
-st.write("Welcome to my Streamlit app!")
 
+if "questions" not in st.session_state:
+    st.session_state.questions = {}
+
+if "shuffled_questions" not in st.session_state:
+    st.session_state.shuffled_questions = []
+
+if 'start_quiz' not in st.session_state:
+    st.session_state.start_quiz = False
 
 def read_json_file(file_path):
     try:
@@ -15,65 +21,222 @@ def read_json_file(file_path):
         st.error(f"{file_path} not found. Please ensure the file exists and is in the correct location.")
         return None
 
-def show_choices(choices):
-    for key, value in choices.items(): 
-        st.markdown(f"<p style='margin-left: 40px;'>{key}: {value}</p>", unsafe_allow_html=True)
-
-if "questions" not in st.session_state:
-    st.session_state.questions = {}
-
-
-@st.cache_data
-def get_data():
-    print("Reading data from file...")
+def shuffle_and_start_quiz():
+    # Toggle the checkbox state to the opposite value
+    st.session_state.start_quiz = not st.session_state.start_quiz
     questions = read_json_file("questions.json")
-    return questions
-
-@st.fragment
-def shuffle_data(data):
-    print("Shuffling data...")
-    ran.shuffle(data)
-    st.session_state.questions = data
-    #====================================================================================
-    # because you cannot return a value from a fragment, 
-    # session_state is used to store the data in the session, 
-    # so when this function is called the the questions are automatically available 
-    # for the rest of the app using st.session_state.questions
-    #====================================================================================   
+    ran.shuffle(questions)
+    st.session_state.questions = questions
+    return st.session_state.questions
 
 
-data = get_data()
-shuffle_data(data)
+def format_correct_answer(question_data):
+    for key, value in question_data["answer"].items():
+        answer = f"{key}. {value}"
+    return answer
 
-
-
-with st.form(key='my_form'):
+def format_questions(questions):
     count = 0
-    score = 0
-
-    st.write("Welcome to the Quiz!\n")
-    for question_data in st.session_state.questions:
+    user_answers = []
+    correct_answers = []
+    for question_data in questions:
         count += 1
-        question_index = st.session_state.questions.index(question_data)
+        # Get the question text from the question_data dictionary
         question = question_data["question"]
-        choices_list = []
 
-        #=====================================================================================================
-        # list comprehension to create a list of choices
         choices_list = [f"{key}. {value}" for key, value in question_data["choices"].items()]
-        #=====================================================================================================
-        # #for loop through the choices and print them out, does the same as the list comprehension above
-        #     for item in question_data["choices"].items():
-        #         choice = f" {item[0]}. {item[1]}"
-        #         choices_list.append(choice)
-        #         st.write(choice)
-        #======================================================================================================
+        
+        # Format the correct answer
+        answer = format_correct_answer(question_data)
+        correct_answers.append(answer)
 
-        question = st.radio(f"Question {count}.  {question}", options=choices_list, index=None)
+        
 
-    submit_button = st.form_submit_button(label='Submit')
+        answer = st.radio(f"Question {count}.  {question}", choices_list, index=None, key=f"question_{count}")
+        user_answers.append(answer)
+        st.session_state.user_answers = user_answers
+        st.session_state.correct_answers = correct_answers
+
+        st.write(answer)
+    st.write(st.session_state.user_answers)
+    st.write(st.session_state.correct_answers)
 
 
+st.button("Show Input", on_click=shuffle_and_start_quiz)
+
+
+#============================================================================================================
+
+if st.session_state.start_quiz:
+    format_questions(st.session_state.questions)
+
+st.write("Button state:", st.session_state.start_quiz)
+
+
+
+
+
+
+
+
+
+# st.title("Quiz App")
+# st.write("Welcome to my Streamlit app!")
+
+
+# if "questions" not in st.session_state:
+#     st.session_state.questions = {}
+
+# if "shuffled_questions" not in st.session_state:
+#     st.session_state.shuffled_questions = []
+
+# def read_json_file(file_path):
+#     try:
+#         with open(file_path, 'r') as file:
+#             data = json.load(file)
+#         return data
+#     except FileNotFoundError:
+#         st.error(f"{file_path} not found. Please ensure the file exists and is in the correct location.")
+#         return None
+
+
+
+# def start_quiz():
+#     count = 0
+#     score = 0
+#     for question_data in st.session_state.shuffled_questions:
+#         count += 1
+#         question_index = st.session_state.shuffled_questions.index(question_data)
+#         question = question_data["question"]
+#         choices = question_data["choices"]
+#         correct_answer = question_data["answer"]
+
+#         # Create a list of choices with random order
+#         choices_list = list(choices.values())
+#         ran.shuffle(choices_list)
+
+#         # Display the question and choices
+#         st.write(f"Question {count}: {question}")
+#         answer = st.radio("Select your answer:", choices_list, index=None, key=f"question_{count}")
+
+#         # Check if the user's answer is correct
+#         if answer == correct_answer:
+#             score += 1
+#             st.write("Correct!")
+#         else:
+#             st.write(f"Incorrect! The correct answer is: {correct_answer}")
+
+#     # Display the final score
+#     st.write(f"Quiz completed! Your score is: {score}/{count}")
+
+
+
+# @st.fragment
+# def shuffle_data(data):
+#     print("Shuffling data...")
+#     if st.button("Start Quiz", on_click=start_quiz, key="start_button"):
+#         ran.shuffle(data)
+#         st.session_state.shuffled_questions = data
+#         print("Data shuffled and stored in session state.")
+#         print(st.session_state.shuffled_questions)
+    
+
+
+
+# data = get_data()
+# print("Original Questions:", st.session_state.questions)
+# shuffle_data(data)
+# print(st.session_state.questions)
+
+# if "shuffled_questions" in st.session_state:
+#     with st.form(key="quiz_form"):
+        
+#         start_quiz()
+            
+#         submit_button = st.form_submit_button(label="Submit")
+
+
+
+
+
+
+# def show_new_quiz():
+#     count = 0
+#     for question_data in st.session_state.questions:
+#         count += 1
+#         question_index = st.session_state.questions.index(question_data)
+#         question = question_data["question"]
+        
+
+        # #=====================================================================================================
+        # # list comprehension to create a list of choices
+        # choices_list = [f"{key}. {value}" for key, value in question_data["choices"].items()]
+        # # print(choices_list)
+        # #=====================================================================================================
+        # # #for loop through the choices and print them out, does the same as the list comprehension above
+        # #     for item in question_data["choices"].items():
+        # #         choice = f" {item[0]}. {item[1]}"
+        # #         choices_list.append(choice)
+        # #         st.write(choice)
+        # #======================================================================================================
+
+        # answer = st.radio(f"Question {count}.  {question}", choices_list, index=None, key=f"question_{count}")
+
+
+
+# def show_choices(choices):
+#     for key, value in choices.items(): 
+#         st.markdown(f"<p style='margin-left: 40px;'>{key}: {value}</p>", unsafe_allow_html=True)
+
+
+
+
+
+
+# 
+# 
+
+
+# score = 0
+# question_list = []
+# st.write("Welcome to the Quiz!\n")
+
+# print(st.session_state.questions)
+
+
+
+
+# def get_quiz():
+#     count = 0
+#     for question_data in st.session_state.questions:
+#         count += 1
+#         question_index = st.session_state.questions.index(question_data)
+#         question = question_data["question"]
+        
+
+#         #=====================================================================================================
+#         # list comprehension to create a list of choices
+#         choices_list = [f"{key}. {value}" for key, value in question_data["choices"].items()]
+#         print(choices_list)
+#         #=====================================================================================================
+#         # #for loop through the choices and print them out, does the same as the list comprehension above
+#         #     for item in question_data["choices"].items():
+#         #         choice = f" {item[0]}. {item[1]}"
+#         #         choices_list.append(choice)
+#         #         st.write(choice)
+#         #======================================================================================================
+
+#         question_list.append(question)
+#     return question_list
+#         #======================================================================================================
+# questions = get_quiz()
+
+# print(question_list)
+# # 
+# # st.write(answer)
+
+# my_answer = st.radio("choose your favorite color", ("Blue", "Red", "Green", "Purple"), index=None)
+# st.write(my_answer)
 
 
 
