@@ -2,6 +2,19 @@ import streamlit as st
 import random as ran
 import json
 
+"""
+This is a simple quiz app built using Streamlit. 
+The app reads questions and answers from a JSON file, 
+shuffles them, and presents the user with a series of 
+multiple-choice questions. The user can submit their 
+answers, and the app will display their score and 
+provide feedback on each question. The user can also 
+try the quiz again by clicking the "Try Again" button.
+"""
+# future work:
+# add options to choose quiz type (e.g., multiple choice, true/false)
+# add options to choose quiz difficulty (e.g., easy, medium, hard)
+# add options to choose quiz category (e.g., history, science, technology)
 #=========================================================
 # Initialize session state variables
 if "shuffled_questions" not in st.session_state:
@@ -62,8 +75,9 @@ def format_choice_list(question_data):
     # ran.shuffle(choices_list)
     return choices_list
 
+# Display the question and choices using st.radio
 def display_questions(question, choices_list, count):
-    # Display the question and choices using st.radio
+
     answer = st.radio(f"Question {count}.  {question}", choices_list, index=None, key=f"question_{count}")
     return answer
 
@@ -97,7 +111,6 @@ def format_questions(questions):
         st.write(answer)
 
 def score_quiz():
-    st.write("Scoring your answers...")
     score = 0
     question_count = len(st.session_state.shuffled_questions)
     for index in range(question_count):
@@ -105,12 +118,8 @@ def score_quiz():
             score += 1
     st.write(f"Quiz completed! Your score is: {score}/{question_count}")
 
-# placeholder = st.empty()
-
 
 def show_results():
-    # placeholder.empty() # Clear the button
-    
     question_count = len(st.session_state.shuffled_questions)
     for index in range(question_count):
         if st.session_state.user_answers[index] == st.session_state.correct_answers[index]:
@@ -136,10 +145,10 @@ if st.session_state.start_quiz:
 
     if submit_button:
         score_quiz()
-        placeholder = st.empty()
-        # with placeholder.container():
         st.button("Show Results", on_click=show_results)
 
+
+# Display the start/try again button
 st.button(st.session_state.button_label, on_click=shuffle_and_start_quiz)
 
 st.write("Button state:", st.session_state.start_quiz)
