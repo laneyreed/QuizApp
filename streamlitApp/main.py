@@ -10,6 +10,11 @@ if "questions" not in st.session_state:
 if "shuffled_questions" not in st.session_state:
     st.session_state.shuffled_questions = []
 
+
+if 'button_label' not in st.session_state:
+    st.session_state.button_label = "Start Quiz"
+
+
 if 'start_quiz' not in st.session_state:
     st.session_state.start_quiz = False
 #=========================================================
@@ -29,8 +34,15 @@ def read_json_file(file_path):
 
 # Get data from JSON file and store in session state
 def shuffle_and_start_quiz():
-    # Toggle the checkbox state to the opposite value
+    # Toggle the button_label state to the opposite value
     st.session_state.start_quiz = not st.session_state.start_quiz
+
+    if st.session_state.start_quiz:
+        st.session_state.button_label = "Restart Quiz"
+    else:
+        st.session_state.button_label = "Start Quiz"
+    
+    
     questions = read_json_file("questions.json")
     ran.shuffle(questions)
     st.session_state.questions = questions
@@ -78,17 +90,26 @@ def format_questions(questions):
         st.session_state.correct_answers = correct_answers
 
         st.write(answer)
-    st.write(st.session_state.user_answers)
-    st.write(st.session_state.correct_answers)
+    # st.write(st.session_state.user_answers)
+    # st.write(st.session_state.correct_answers)
 
 
-st.button("Show Input", on_click=shuffle_and_start_quiz)
+
 
 
 #============================================================================================================
 
 if st.session_state.start_quiz:
-    format_questions(st.session_state.questions)
+    with st.form(key="quiz_form"):
+        # Call the function to format and display questions
+        format_questions(st.session_state.questions)
+        submit_button = st.form_submit_button(label="Submit")
+    if submit_button:
+        st.write("Form submitted!")
+        st.write("User answers:", st.session_state.user_answers)
+        st.write("Correct answers:", st.session_state.correct_answers)
+
+st.button(st.session_state.button_label, on_click=shuffle_and_start_quiz)
 
 st.write("Button state:", st.session_state.start_quiz)
 
