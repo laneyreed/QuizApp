@@ -1,4 +1,4 @@
-# QuizApp
+# Quiz App
 
 ## Overview
 This Quiz App project contains three different implementations of a multiple-choice quiz application, each with increasing complexity and user experience enhancements. Each version builds upon lessons learned from the previous one.
@@ -107,25 +107,5 @@ Potential improvements applicable to all versions:
 9. Detailed performance analytics
 10. Mobile-responsive design (Streamlit version)
 
-------------------------
+---
 
-
-# Quiz App
-
-- [Data from list](./datafromfile/main.py)
-- [Data from json file](./mvp/main.py)
-- [Streamlit Quiz App](./streamlitApp/README.md)
-
-
-
-## MVP
-### User Stories
-- As a user, I want to answer multiple-choice questions one by one
-- As a user, I want to see my score and correct answers immediately after finishing
-
-### Questions Data Model
-- `questions`: a list of question dictionaries
-- **Keys:**
-    - `question`: value is the question as a string
-    - `choices` : a dictionary, representing the multiple-choice options for the question
-    - `answer`: a dictionary, representing the correct answer
