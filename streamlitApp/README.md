@@ -21,7 +21,19 @@ The most advanced version uses Streamlit to create an interactive web-based quiz
 - **Frontend**: Automatically generated web interface
 
 ### Questions Data Model
-Same as previous versions - `questions.json` contains a list of question dictionaries
+- `questions.json` contains a list of question dictionaries with `question`, `choices`, and `answer` keys
+```python
+{
+    "question": "Question text here",
+    "choices": {
+        "A": "Option A",
+        "B": "Option B", 
+        "C": "Option C",
+        "D": "Option D"
+    },
+    "answer": {"C": "Correct option"}
+}
+```
 
 ### User Stories
 - As a user, I want to answer multiple-choice questions one by one
