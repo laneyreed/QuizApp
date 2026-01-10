@@ -21,7 +21,7 @@ This Quiz App project contains three different implementations of a multiple-cho
 
 ---
 
-## Version 1: MVP (Minimum Viable Product)
+## [Version 1: MVP](./mvp/README.md) (Minimum Viable Product)
 - Python 3.x (standard library only)
 
 ##### Run MVP Version
@@ -31,7 +31,7 @@ python main.py
 ```
 ---
 
-## Version 2: Data from File
+## [Version 2: Data from File](./datafromfile/README.md)
 - Python 3.x (standard library only)
 
 **Key Improvements**:
@@ -48,7 +48,7 @@ python main.py
 ---
 
 
-## Version 3: Streamlit Web Application
+## [Version 3: Streamlit Web Application](./streamlitApp/README.md)
 - Python 3.x
 - Streamlit (see pyproject.toml for specific version)
 
